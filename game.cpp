@@ -59,69 +59,67 @@ void Game :: printInfo(User u){
 
 void Game :: play(User *u){
 
-u->changeCanSpin(); //should make canSpin true
-char guess;
-while(!p.getIsSolved()&&u->getCanSpin()){
-	printInfo(*u);
-	cout << "What would you like to do? " <<endl;
-	cout<< "Either type \"w\" to spin the wheel and guess a letter or type \"s\" to solve the puzzle or type \"e\" to exit the game" << endl;
-	cout.put('\n');
-	cout << ">";
-	string option;
-	getline(cin,option);
+	u->changeCanSpin(); //should make canSpin true
+	char guess;
+	while(!p.getIsSolved()&&u->getCanSpin()){
+		printInfo(*u);
+		cout << "What would you like to do? " <<endl;
+		cout<< "Either type \"w\" to spin the wheel and guess a letter or type \"s\" to solve the puzzle or type \"e\" to exit the game" << endl;
+		cout.put('\n');
+		cout << ">";
+		string option;
+		getline(cin,option);
 		if(option=="w"){
 			
-		Wheel w;
-		wheelOutcome* a =  &(w.spin());
+			Wheel w;
+			wheelOutcome* a =  &(w.spin());
 		
-		if(a->canGuess()){
-			double val = a->getOutcomeVal();
-			cout << "The wheel landed at $" << val << endl;
-			//char letterGuess;
-			string letterGuess;
-			bool isOneL = false;
-			bool isLetter = false;
-				do{
+			if(a->canGuess()){
+				double val = a->getOutcomeVal();
+				cout << "The wheel landed at $" << val << endl;
+				//char letterGuess;
+				string letterGuess;
+				bool isOneL = false;
+				bool isLetter = false;
+					do{
 					
-					cout << "Type in a character to guess : " << endl;
-					cout << ">";
-					getline(cin,option);
-					if(option.length()==1){
-						if(isalpha(option.at(0))){
-							char letterGuess = toupper(option.at(0));
-							//scanf(" %1c",&letterGuess);
-							//char propGuess = toupper(letterGuess);
-							p.guessLetter(letterGuess);
-							isOneL = true;
-							isLetter = true;
+						cout << "Type in a character to guess : " << endl;
+						cout << ">";
+						getline(cin,option);
+						if(option.length()==1){
+							if(isalpha(option.at(0))){
+								char letterGuess = toupper(option.at(0));
+								//scanf(" %1c",&letterGuess);
+								//char propGuess = toupper(letterGuess);
+								p.guessLetter(letterGuess);
+								isOneL = true;
+								isLetter = true;
+							}
+							else{
+								cout << "Please type in one letter" << endl;
+							}
+
 						}
 						else{
 							cout << "Please type in one letter" << endl;
 						}
+					}while(p.getIsDup()&&!isOneL&&!isLetter);
 
-					}
-					else{	
-						cout << "Please type in one letter" << endl;
+				if(p.getIsRight()){
+					cout << "You gain $" <<val*p.getNumOfLetters() << " dollars" <<endl;
+					u->changePuzzAmt(val*p.getNumOfLetters());
+				}
+				else{
+					cout <<"Your turn is over"<< endl;
+					u->changeCanSpin();
+				}
+			}else{
 
-					}
-				}while(p.getIsDup()&&!isOneL&&!isLetter);
-
-			if(p.getIsRight()){
-				cout << "You gain $" <<val*p.getNumOfLetters() << " dollars" <<endl;
-				u->changePuzzAmt(val*p.getNumOfLetters());
+				cout << "You landed on bankrupt" <<endl;
+				cout << "Sorry, your turn is over and you lose all your money this round" << endl;
+				u->setZeroPuzz();
+				u->changeCanSpin();
 			}
-			else{
-				cout <<"Your turn is over"<< endl;
-				u->changeCanSpin();	
-			}
-	
-		}else{
-
-		cout << "You landed on bankrupt" <<endl;
-		cout << "Sorry, your turn is over and you lose all your money this round" << endl;
-		u->setZeroPuzz();
-		u->changeCanSpin();
-		}
 
 		}
 		else if(option=="s"){
@@ -130,6 +128,9 @@ while(!p.getIsSolved()&&u->getCanSpin()){
 			cout << ">";
 			getline(cin,puzzleGuess);
 			p.solvePuzzle(puzzleGuess);
+			if(!p.getIsSolved()){
+				u->changeCanSpin();
+			}
 		}
 		else if(option=="e"){
 			cout << "You have exited the game" << endl;
@@ -146,12 +147,11 @@ while(!p.getIsSolved()&&u->getCanSpin()){
 			this_thread::sleep_for(1s);
 */
 		}
-			
-	}		
+
+	}
 	if(p.getIsSolved()){
 		u->changeTotalAmt(u->getPuzzAmt());
 	}
-
 
 }
 
@@ -203,4 +203,3 @@ while(!g.getPuzzle().getIsSolved()){
 return 0;
 
 }
-
