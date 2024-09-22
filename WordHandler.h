@@ -3,16 +3,16 @@
 #ifndef WORDHANDLER_H
 #define WORDHANDLER_H
 
-using namespace std;
-
-class WordHandler{
-	private:
-	string category;
-	string puzzle;
-	void readWord();
+class WordHandler
+{
 	public:
-	WordHandler();
-	string getCategory();	
-	string getPuzzle();
+		WordHandler();
+		std::string getCategory();	
+		std::string getPuzzle();
+
+	private:
+		std::string category;
+		std::string puzzle;
+		void readWord();
 };
 #endif

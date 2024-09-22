@@ -1,25 +1,14 @@
-#include "outcome.h"
-#include <cstdio>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <string.h>
-using namespace std;
-
+#include "wheeloutcome.h"
 
 #ifndef PENALTY_H
 #define PENALTY_H
 
-
-
-class Penalty: public wheelOutcome{
-
-public:
-double getOutcomeVal();
-void printType();
-typeOutcome getType();
-bool canGuess();
+class Penalty : public WheelOutcome
+{
+    public:
+        double getOutcomeVal() override;
+        void printType() override;
+        TypeOutcome getType() override;
+        bool canGuess() override;
 };
-
 #endif

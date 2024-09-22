@@ -1,205 +1,208 @@
-#include "WordHandler.h"
-#include "puzzle.h"
+#include <thread>
+#include "game.h"
 #include "wheel.h"
 #include "reward.h"
 #include "penalty.h"
-#include "outcome.h"
-#include <cstdio>
-#include <string>
+#include "wheeloutcome.h"
 #include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <stdlib.h>
-#include <string.h>
-#include <algorithm>
-#include <thread>
-#include <chrono>
-#include "user.h"
-#include "game.h"
-using namespace std;
+#include "WordHandler.h"
 	
-Game :: Game(){
-/*	cout << "CATEGORY : " << p.getWordHandler().getCategory() << endl;
-	cout.put('\n');
-	cout << "PUZZLE : "  << p.getWordHandler().getPuzzle() << endl;
-	cout.put('\n');
-	cout << "BOARD : "  << p.getBoard() << endl;
-	cout.put('\n');*/
+Game::Game()
+{
+	/*std::cout << "CATEGORY : " << puzzle.getWordHandler().getCategory() << std::endl;
+	std::cout.put('\n');
+	std::cout << "PUZZLE : "  << puzzle.getWordHandler().getPuzzle() << std::endl;
+	std::cout.put('\n');
+	std::cout << "BOARD : "  << puzzle.getBoard() << std::endl;
+	std::cout.put('\n');*/
 }
 
-Puzzle Game :: getPuzzle(){
-
-
-	return p;
-
-}
-void Game :: printInfo(User u){
-	cout << "CATEGORY : " << p.getWordHandler().getCategory() << endl;
-	cout.put('\n');
-
-	cout << "PUZZLE : "  << p.getWordHandler().getPuzzle() << endl;
-	cout.put('\n');
-	
-	cout << "It is " << u.getName() << "'s turn" << endl;
-	cout.put('\n');
-	cout << "BOARD : " << p.getBoard() << endl;
-	cout.put('\n');
-	this_thread::sleep_for(1s);
-	cout << "SCORE : $" << u.getPuzzAmt() << endl;
-	cout.put('\n');
-	cout << "TOTAL : $" << u.getTotalAmt() <<endl;
-	cout.put('\n');
-	this_thread::sleep_for(1s);
-	p.printLetters();
-	cout.put('\n');
-	this_thread::sleep_for(1s);
-	
-
+Puzzle Game::getPuzzle()
+{
+	return puzzle;
 }
 
-void Game :: play(User *u){
+void Game::printInfo(User u)
+{
+	std::cout << "CATEGORY : " << puzzle.getWordHandler().getCategory() << std::endl;
+	std::cout.put('\n');
 
+	std::cout << "PUZZLE : "  << puzzle.getWordHandler().getPuzzle() << std::endl;
+	std::cout.put('\n');
+	
+	std::cout << "It is " << u.getName() << "'s turn" << std::endl;
+	std::cout.put('\n');
+	std::cout << "BOARD : " << puzzle.getBoard() << std::endl;
+	std::cout.put('\n');
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+	std::cout << "SCORE : $" << u.getPuzzAmt() << std:: endl;
+	std::cout.put('\n');
+	std::cout << "TOTAL : $" << u.getTotalAmt() << std::endl;
+	std::cout.put('\n');
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+	puzzle.printLetters();
+	std::cout.put('\n');
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+
+void Game::play(User *u)
+{
 	u->changeCanSpin(); //should make canSpin true
 	char guess;
-	while(!p.getIsSolved()&&u->getCanSpin()){
+	while (!puzzle.getIsSolved() && u->getCanSpin())
+	{
 		printInfo(*u);
-		cout << "What would you like to do? " <<endl;
-		cout<< "Either type \"w\" to spin the wheel and guess a letter or type \"s\" to solve the puzzle or type \"e\" to exit the game" << endl;
-		cout.put('\n');
-		cout << ">";
-		string option;
-		getline(cin,option);
-		if(option=="w"){
-			
+		std::cout << "What would you like to do? " << std::endl;
+		std::cout << "Either type \"w\" to spin the wheel and guess a letter or type \"s\" to solve the puzzle or type \"e\" to exit the game" << std::endl;
+		std::cout.put('\n');
+		std::cout << ">";
+		std::string option;
+		getline(std::cin,option);
+		if (option == "w")
+		{
 			Wheel w;
-			wheelOutcome* a =  &(w.spin());
+			WheelOutcome* a =  &(w.spin());
 		
-			if(a->canGuess()){
+			if (a->canGuess())
+			{
 				double val = a->getOutcomeVal();
-				cout << "The wheel landed at $" << val << endl;
-				//char letterGuess;
-				string letterGuess;
-				bool isOneL = false;
-				bool isLetter = false;
-					do{
+				std::cout << "The wheel landed at $" << val << std::endl;
+				std::this_thread::sleep_for(std::chrono::seconds(1));
+				std::string letterGuess;
+				bool isValidLetterInput = false;
+				do
+				{
+					std::cout << "Type in a character to guess : " << std::endl;
+					std::cout << ">";
 					
-						cout << "Type in a character to guess : " << endl;
-						cout << ">";
-						getline(cin,option);
-						if(option.length()==1){
-							if(isalpha(option.at(0))){
-								char letterGuess = toupper(option.at(0));
-								//scanf(" %1c",&letterGuess);
-								//char propGuess = toupper(letterGuess);
-								p.guessLetter(letterGuess);
-								isOneL = true;
-								isLetter = true;
-							}
-							else{
-								cout << "Please type in one letter" << endl;
-							}
-
+					getline(std::cin,option);
+					if (option.length() == 1)
+					{
+						if (isalpha(option.at(0)))
+						{
+							char letterGuess = toupper(option.at(0));
+							puzzle.guessLetter(letterGuess);
+							isValidLetterInput = true;
 						}
-						else{
-							cout << "Please type in one letter" << endl;
+						else
+						{
+							std::cout << "Please type in one letter" << std::endl;
 						}
-					}while(p.getIsDup()&&!isOneL&&!isLetter);
+					}
+					else
+					{
+						std::cout << "Please type in one letter" << std::endl;
+					}
+				} while (puzzle.getIsDup() && !isValidLetterInput);
 
-				if(p.getIsRight()){
-					cout << "You gain $" <<val*p.getNumOfLetters() << " dollars" <<endl;
-					u->changePuzzAmt(val*p.getNumOfLetters());
+				if (puzzle.getIsRight())
+				{
+					std::cout << "You gain $" <<val*puzzle.getNumOfLetters() << " dollars" << std::endl;
+					u->changePuzzAmt(val*puzzle.getNumOfLetters());
 				}
-				else{
-					cout <<"Your turn is over"<< endl;
+				else
+				{
+					std::cout <<"Your turn is over"<< std::endl;
 					u->changeCanSpin();
 				}
-			}else{
-
-				cout << "You landed on bankrupt" <<endl;
-				cout << "Sorry, your turn is over and you lose all your money this round" << endl;
+			}
+			else
+			{
+				std::cout << "You landed on bankrupt" << std::endl;
+				std::cout << "Sorry, your turn is over and you lose all your money this round" << std::endl;
+				std::this_thread::sleep_for(std::chrono::seconds(1));
 				u->setZeroPuzz();
 				u->changeCanSpin();
 			}
 
 		}
-		else if(option=="s"){
-			string puzzleGuess;
-			cout << "What is your guess for the puzzle? : " <<endl;
-			cout << ">";
-			getline(cin,puzzleGuess);
-			p.solvePuzzle(puzzleGuess);
-			if(!p.getIsSolved()){
+		else if (option == "s")
+		{
+			std::string puzzleGuess;
+			std::cout << "What is your guess for the puzzle? : " << std::endl;
+			std::cout << ">";
+			getline(std::cin,puzzleGuess);
+			puzzle.solvePuzzle(puzzleGuess);
+			if (!puzzle.getIsSolved())
+			{
 				u->changeCanSpin();
 			}
 		}
-		else if(option=="e"){
-			cout << "You have exited the game" << endl;
+		else if (option == "e")
+		{
+			std::cout << "You have exited the game" << std::endl;
 			exit(0);
 		}
-		else{
-			cout << "That is not a valid option" << endl;
-			cout.put('\n');
-			this_thread::sleep_for(1s);
-/*			cout << "CATEGORY : " << p.getWordHandler().getCategory() << endl;
-			cout.put('\n');
-			cout << "BOARD : " << p.getBoard() << endl;
-			cout.put('\n');
-			this_thread::sleep_for(1s);
+		else
+		{
+			std::cout << "That is not a valid option" << std::endl;
+			std::cout.put('\n');
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+/*			std::cout << "CATEGORY : " << puzzle.getWordHandler().getCategory() << std::endl;
+			std::cout.put('\n');
+			std::cout << "BOARD : " << puzzle.getBoard() << std::endl;
+			std::cout.put('\n');
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 */
 		}
-
 	}
-	if(p.getIsSolved()){
+	if (puzzle.getIsSolved())
+	{
 		u->changeTotalAmt(u->getPuzzAmt());
 	}
-
 }
 
 //main with only 1 player
 /*
-int main(){
+int main()
+{
+	Game g;
+	//User a("Gogol");
+	User* a = new User("Gogol");
+	if (!g.getPuzzle().getIsSolved())
+	{
+		//g.play(&a);
+		g.play(a);
+	}
+	std::cout << "PUZZLE AMT : " <<  a->getPuzzAmt() << std::endl;
+	std::cout << "TOTAL AMT : " << a->getTotalAmt() << std::endl;
 
-Game g;
-//User a("Gogol");
-User* a = new User("Gogol");
-if(!g.getPuzzle().getIsSolved()){
-//g.play(&a);
-g.play(a);
-}
-cout << "PUZZLE AMT : " <<  a->getPuzzAmt() << endl;
-cout << "TOTAL AMT : " << a->getTotalAmt() << endl;
-
-return 0;
-
-
+	return 0;
 }
 */
 
-int main(){
-Game g;
-User* a = new User("Gogol");
-User* b = new User("Bapi");
-User* c = new User("Gaton");
+int main()
+{
+	std::cout << "Welcome to Wheel of Fortune CLI Game" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
-a->changeHasTurn();
+	Game g;
+	User* a = new User("Gogol");
+	User* b = new User("Bapi");
+	User* c = new User("Gaton");
 
-while(!g.getPuzzle().getIsSolved()){
-	if(a->getHasTurn()){
-		g.play(a);
-		b->changeHasTurn();
-		a->changeHasTurn();
-	}
-	if(b->getHasTurn()){
-		g.play(b);
-		c->changeHasTurn();
-		b->changeHasTurn();
-	}
-	if(c->getHasTurn()){
-		g.play(c);
-		a->changeHasTurn();
-		c->changeHasTurn();
-	}
-}
-return 0;
+	a->changeHasTurn();
 
+	while (!g.getPuzzle().getIsSolved())
+	{
+		if (a->getHasTurn())
+		{
+			g.play(a);
+			b->changeHasTurn();
+			a->changeHasTurn();
+		}
+		if (b->getHasTurn())
+		{
+			g.play(b);
+			c->changeHasTurn();
+			b->changeHasTurn();
+		}
+		if (c->getHasTurn())
+		{
+			g.play(c);
+			a->changeHasTurn();
+			c->changeHasTurn();
+		}
+	}
+	return 0;
 }

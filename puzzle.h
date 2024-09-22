@@ -1,25 +1,11 @@
 #include "WordHandler.h"
-#include <cstdio>
 #include <string>
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
 
 #ifndef PUZZLE_H
 #define PUZZLE_H
 
-using namespace std;
-
-class Puzzle{
-	private:
-		WordHandler g;
-		bool isSolved;
-		char* puzzleString;
-		char* boardString;
-		char* letters;
-		bool isRight;
-		int numofletters;
-		bool isDup;
+class Puzzle
+{
 	public:
 		Puzzle();
 		void printPuzzInfo();
@@ -35,6 +21,16 @@ class Puzzle{
 		void shiftLetter(char l);
 		bool isInLetters(char charGuess);
 		void guessLetter(char charGuess);
-		void solvePuzzle(string puzzGuess);
+		void solvePuzzle(std::string puzzGuess);
+		
+	private:
+		WordHandler wordHandler;
+		bool isSolved;
+		char* puzzleString;
+		char* boardString;
+		char* letters;
+		bool isRight;
+		int numOfLetters;
+		bool isDup;
 };
 #endif

@@ -1,28 +1,18 @@
-
-#include "outcome.h"
-#include <cstdio>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <string.h>
-using namespace std;
-
+#include "wheeloutcome.h"
 
 #ifndef REWARD_H
 #define REWARD_H
 
-class Reward: public wheelOutcome{
-private:
-double rewardVal;
-public:
-Reward(double rewVal);
-double getOutcomeVal();
-void printType();
-typeOutcome getType();
-bool canGuess();
-
-
+class Reward : public WheelOutcome
+{
+    public:
+        Reward(double rewVal);
+        double getOutcomeVal() override;
+        void printType() override;
+        TypeOutcome getType() override;
+        bool canGuess() override;
+    private:
+        double rewardVal;
 };
 #endif
 

@@ -1,42 +1,29 @@
 #include "reward.h"
-#include "outcome.h"
-#include <cstdio>
-#include <string>
 #include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <string.h>
-using namespace std;
 
-
-Reward :: Reward(double rewVal){
-
+Reward::Reward(double rewVal)
+{
 	rewardVal = rewVal;
 }
 
-double Reward :: getOutcomeVal(){
-
+double Reward::getOutcomeVal()
+{
 	return rewardVal;
 }
 
-
-
-void Reward :: printType(){
-	cout << "reward" <<endl;
-
-
+void Reward::printType()
+{
+	std::cout << "REWARD" << std::endl;
 }
 
-wheelOutcome :: typeOutcome Reward :: getType(){
-
-	return typeOutcome::reward;
-
+WheelOutcome::TypeOutcome Reward::getType()
+{
+	return TypeOutcome::REWARD;
 }
 
-bool Reward :: canGuess(){
-
+bool Reward::canGuess()
+{
 	return true;
-
 }
 
 

@@ -1,38 +1,23 @@
-#include "outcome.h"
 #include "penalty.h"
-#include <cstdio>
-#include <string>
 #include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <string.h>
-using namespace std;
 
-
-double Penalty :: getOutcomeVal(){
-
+double Penalty::getOutcomeVal()
+{
 	return 0;
-
 }
 
-
-
-void Penalty:: printType(){
-	cout << "penalty" <<endl;
-
-
+void Penalty::printType()
+{
+	std::cout << "PENALTY" << std::endl;
 }
 
-
-
-wheelOutcome :: typeOutcome Penalty :: getType(){
-
-	return typeOutcome::penalty;
-
+WheelOutcome::TypeOutcome Penalty::getType()
+{
+	return TypeOutcome::PENALTY;
 }
 
-bool Penalty :: canGuess(){
-
+bool Penalty::canGuess()
+{
 	return false;
 }
 

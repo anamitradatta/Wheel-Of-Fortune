@@ -1,2 +1,3 @@
 #!/bin/bash
-g++ -o test wheel.cpp reward.cpp penalty.cpp outcome.h WordHandler.cpp puzzle.cpp game.cpp user.cpp
+g++ -o testGame wheel.cpp reward.cpp penalty.cpp wheeloutcome.h WordHandler.cpp puzzle.cpp game.cpp user.cpp
+
