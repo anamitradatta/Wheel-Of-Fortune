@@ -174,7 +174,7 @@ int main()
 int main()
 {
 	std::cout << "Welcome to Wheel of Fortune CLI Game" << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 
 	Game g;
 	User* a = new User("Gogol");

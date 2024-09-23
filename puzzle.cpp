@@ -10,39 +10,21 @@ Puzzle::Puzzle()
 	isDup = false;	
 	isRight = false;
 	numOfLetters = 0;
-	letters = new char[27]; 
-	letters[0] = 'A';
-	letters[1] = 'B';
-	letters[2] = 'C';
-	letters[3] = 'D';
-	letters[4] = 'E';
-	letters[5] = 'F';
-	letters[6] = 'G';
-	letters[7] = 'H';
-	letters[8] = 'I';
-	letters[9] = 'J';
-	letters[10] = 'K';
-	letters[11] = 'L';
-	letters[12] = 'M';
-	letters[13] = 'N';
-	letters[14] = 'O';
-	letters[15] = 'P';
-	letters[16] = 'Q';
-	letters[17] = 'R';
-	letters[18] = 'S';
-	letters[19] = 'T';
-	letters[20] = 'U';
-	letters[21] = 'V';
-	letters[22] = 'W';
-	letters[23] = 'X';
-	letters[24] = 'Y';
-	letters[25] = 'Z';
-	letters[26] = '\0';
+	initLetters();
 	puzzleString = new char[wordHandler.getPuzzle().length()];
 	boardString = new char[wordHandler.getPuzzle().length()];
 	strcpy(puzzleString, wordHandler.getPuzzle().c_str());
 	strcpy(boardString, getBlankPuzzle());
 	//printPuzzInfo();
+}
+
+void Puzzle::initLetters()
+{
+	for (int i = 0; i < NUM_LETTERS; i++)
+	{
+	    letters[i] = (i + LETTERS_BASE);
+	}
+	letters[NUM_LETTERS] = '\0';
 }
 
 void Puzzle::printPuzzInfo()
@@ -123,7 +105,7 @@ bool Puzzle::getIsDup()
 void Puzzle::printLetters()
 {
 	std::cout << "Available letters : "  << std::endl;
-	for (int i = 0 ; i < strlen(letters); i++)
+	for (int i = 0 ; i < NUM_LETTERS; i++)
 	{
 		if (letters[i] != ' ')
 		{
@@ -139,7 +121,7 @@ void Puzzle::printLetters()
 
 void Puzzle::removeLetter(char l)
 {
-	for (int i = 0; i < strlen(letters); i++)
+	for (int i = 0; i < NUM_LETTERS; i++)
 	{
 		if (letters[i] == l)
 		{
@@ -148,38 +130,16 @@ void Puzzle::removeLetter(char l)
 	}
 }
 
-void Puzzle::shiftLetter(char l)
-{
-	bool charFound = false;
-	int s = strlen(letters);
-	for (int i = 0; i < s; i++)
-	{
-		if (letters[i]==l)
-		{
-			charFound = true;
-		}
-		if (charFound)
-		{ 
-			letters[i] = letters[i+1];
-		}
-	}
-	if (charFound==true)
-	{
-		letters[s-1]='\0';
-	}
-}
-
 bool Puzzle::isInLetters(char charGuess)
 {
-	bool exists = false;
-	for (int i = 0; i < strlen(letters); i++)
+	for (int i = 0; i < NUM_LETTERS; i++)
 	{
 		if (letters[i] == charGuess)
 		{ 
-			exists = true; 
+			return true;
 		}
 	}
-	return exists;
+	return false;
 }
 
 void Puzzle::guessLetter(char charGuess)

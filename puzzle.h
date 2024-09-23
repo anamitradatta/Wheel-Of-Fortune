@@ -4,6 +4,9 @@
 #ifndef PUZZLE_H
 #define PUZZLE_H
 
+#define NUM_LETTERS 26
+#define LETTERS_BASE 65
+
 class Puzzle
 {
 	public:
@@ -18,7 +21,6 @@ class Puzzle
 		bool getIsDup();
 		void printLetters();
 		void removeLetter(char l);
-		void shiftLetter(char l);
 		bool isInLetters(char charGuess);
 		void guessLetter(char charGuess);
 		void solvePuzzle(std::string puzzGuess);
@@ -28,9 +30,11 @@ class Puzzle
 		bool isSolved;
 		char* puzzleString;
 		char* boardString;
-		char* letters;
+		char letters[NUM_LETTERS + 1];
 		bool isRight;
 		int numOfLetters;
 		bool isDup;
+
+		void initLetters();
 };
 #endif
