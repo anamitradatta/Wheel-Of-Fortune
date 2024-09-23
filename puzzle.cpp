@@ -7,8 +7,6 @@
 Puzzle::Puzzle()
 {
 	isSolved = false;
-	isDup = false;	
-	isRight = false;
 	numOfLetters = 0;
 	initLetters();
 	puzzleString = new char[wordHandler.getPuzzle().length()];
@@ -92,16 +90,6 @@ bool Puzzle::getIsSolved()
 	return isSolved;
 }
 
-bool Puzzle::getIsRight()
-{
-	return isRight;
-}
-
-bool Puzzle::getIsDup()
-{
-	return isDup;
-}
-
 void Puzzle::printLetters()
 {
 	std::cout << "Available letters : "  << std::endl;
@@ -142,20 +130,18 @@ bool Puzzle::isInLetters(char charGuess)
 	return false;
 }
 
-void Puzzle::guessLetter(char charGuess)
+Puzzle::GuessOutcome Puzzle::guessLetter(char charGuess)
 {
 	if (!isInLetters(charGuess))
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
-		isDup = true;	
 		std::cout << "You already guessed that letter. Try again. " << std::endl;
 		std::cout.put('\n');
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 		//printPuzzInfo();
 		//std::this_thread::sleep_for(std::chrono::seconds(1));
-		return;
+		return GuessOutcome::INVALID;
 	}
-	isRight = false;
 	removeLetter(charGuess);
 	int i;
 	numOfLetters = 0;
@@ -163,8 +149,6 @@ void Puzzle::guessLetter(char charGuess)
 	{
 		if (puzzleString[i] == charGuess)
 		{
-			isRight	= true;
-			isDup =false;
 			numOfLetters++;
 			boardString[i] = charGuess;
 		}
@@ -173,18 +157,19 @@ void Puzzle::guessLetter(char charGuess)
 	{
 		isSolved = true;
  		std::cout << "You have solved the puzzle : " << wordHandler.getPuzzle() << std::endl;
+		return GuessOutcome::SOLVED;
 	}
 	else
 	{
 		if(numOfLetters == 0)
 		{
-			isDup = false;
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 			std::cout << "Sorry, no " << charGuess << "'s" << std::endl;
 			std::cout.put('\n');
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 		    //printPuzzInfo();
 		    //std::this_thread::sleep_for(std::chrono::seconds(1));
+			return GuessOutcome::INCORRECT;
 		}
 		else
 		{
@@ -194,7 +179,7 @@ void Puzzle::guessLetter(char charGuess)
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 		    //printPuzzInfo();
 		    //std::this_thread::sleep_for(std::chrono::seconds(1));
-
+			return GuessOutcome::CORRECT;
 		}
 	}
 }
@@ -220,7 +205,6 @@ void Puzzle::solvePuzzle(std::string puzzGuess)
 		//printPuzzInfo();
 		//std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
-
 }
 
 /*
@@ -242,7 +226,7 @@ int main()
 			char guess = option.at(0);
 			p.guessLetter(guess);
 		}
-		else if (option != "solve" && option !="exit" && option.length()==1 && islower(option.at(0)))
+		else if (option != "solve" && option != "exit" && option.length() == 1 && islower(option.at(0)))
 		{
 			char guess = toupper(option.at(0));
 			p.guessLetter(guess);

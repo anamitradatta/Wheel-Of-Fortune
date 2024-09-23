@@ -70,6 +70,7 @@ void Game::play(User *u)
 				std::this_thread::sleep_for(std::chrono::seconds(1));
 				std::string letterGuess;
 				bool isValidLetterInput = false;
+				Puzzle::GuessOutcome guessOutcome = Puzzle::GuessOutcome::INVALID;
 				do
 				{
 					std::cout << "Type in a character to guess : " << std::endl;
@@ -81,7 +82,7 @@ void Game::play(User *u)
 						if (isalpha(option.at(0)))
 						{
 							char letterGuess = toupper(option.at(0));
-							puzzle.guessLetter(letterGuess);
+							guessOutcome = puzzle.guessLetter(letterGuess);
 							isValidLetterInput = true;
 						}
 						else
@@ -93,17 +94,20 @@ void Game::play(User *u)
 					{
 						std::cout << "Please type in one letter" << std::endl;
 					}
-				} while (puzzle.getIsDup() && !isValidLetterInput);
+				} while (!isValidLetterInput || guessOutcome == Puzzle::GuessOutcome::INVALID);
 
-				if (puzzle.getIsRight())
+				switch (guessOutcome)
 				{
-					std::cout << "You gain $" <<val*puzzle.getNumOfLetters() << " dollars" << std::endl;
-					u->changePuzzAmt(val*puzzle.getNumOfLetters());
-				}
-				else
-				{
-					std::cout <<"Your turn is over"<< std::endl;
-					u->changeCanSpin();
+					case Puzzle::GuessOutcome::CORRECT:
+					case Puzzle::GuessOutcome::SOLVED:
+						std::cout << " You gain $" <<val*puzzle.getNumOfLetters() << " dollars" << std::endl;
+						u->changePuzzAmt(val*puzzle.getNumOfLetters());
+						break;
+					case Puzzle::GuessOutcome::INCORRECT:
+					default:
+					    std::cout << "Sorry, Your turn is over" << std::endl;
+						u->changeCanSpin();
+						break;
 				}
 			}
 			else
@@ -146,8 +150,10 @@ void Game::play(User *u)
 */
 		}
 	}
+
 	if (puzzle.getIsSolved())
 	{
+		std::cout << u->getName() << " has solved the puzzle and earned " << u->getPuzzAmt() << " dollars" << std::endl;
 		u->changeTotalAmt(u->getPuzzAmt());
 	}
 }
@@ -185,19 +191,19 @@ int main()
 
 	while (!g.getPuzzle().getIsSolved())
 	{
-		if (a->getHasTurn())
+		if (a->getHasTurn() && !g.getPuzzle().getIsSolved())
 		{
 			g.play(a);
 			b->changeHasTurn();
 			a->changeHasTurn();
 		}
-		if (b->getHasTurn())
+		if (b->getHasTurn() && !g.getPuzzle().getIsSolved())
 		{
 			g.play(b);
 			c->changeHasTurn();
 			b->changeHasTurn();
 		}
-		if (c->getHasTurn())
+		if (c->getHasTurn() && !g.getPuzzle().getIsSolved())
 		{
 			g.play(c);
 			a->changeHasTurn();
