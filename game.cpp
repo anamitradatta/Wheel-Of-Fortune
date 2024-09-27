@@ -73,6 +73,7 @@ void Game::play(User *u)
 				Puzzle::GuessOutcome guessOutcome = Puzzle::GuessOutcome::INVALID;
 				do
 				{
+					isValidLetterInput = false;
 					std::cout << "Type in a character to guess : " << std::endl;
 					std::cout << ">";
 					
@@ -88,11 +89,13 @@ void Game::play(User *u)
 						else
 						{
 							std::cout << "Please type in one letter" << std::endl;
+							isValidLetterInput = false;
 						}
 					}
 					else
 					{
 						std::cout << "Please type in one letter" << std::endl;
+						isValidLetterInput = false;
 					}
 				} while (!isValidLetterInput || guessOutcome == Puzzle::GuessOutcome::INVALID);
 
