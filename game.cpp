@@ -6,6 +6,7 @@
 #include "wheeloutcome.h"
 #include <iostream>
 #include "WordHandler.h"
+#include <algorithm>
 	
 Game::Game()
 {
@@ -58,6 +59,7 @@ void Game::play(User *u)
 		std::cout << ">";
 		std::string option;
 		getline(std::cin,option);
+		std::transform(option.begin(), option.end(), option.begin(), ::tolower);
 		if (option == "w")
 		{
 			Wheel w;
@@ -66,7 +68,7 @@ void Game::play(User *u)
 			if (a->canGuess())
 			{
 				double val = a->getOutcomeVal();
-				std::cout << "The wheel landed at $" << val << std::endl;
+				std::cout << "The wheel landed at $" << val << " dollars" << std::endl;
 				std::this_thread::sleep_for(std::chrono::seconds(1));
 				std::string letterGuess;
 				bool isValidLetterInput = false;
@@ -121,7 +123,6 @@ void Game::play(User *u)
 				u->setZeroPuzz();
 				u->changeCanSpin();
 			}
-
 		}
 		else if (option == "s")
 		{
