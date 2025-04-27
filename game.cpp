@@ -1,12 +1,14 @@
 #include <thread>
+#include <iostream>
+#include <algorithm>
+#include <array>
+
 #include "game.h"
 #include "wheel.h"
 #include "reward.h"
 #include "penalty.h"
 #include "wheeloutcome.h"
-#include <iostream>
 #include "WordHandler.h"
-#include <algorithm>
 	
 Game::Game()
 {
@@ -25,7 +27,7 @@ Puzzle Game::getPuzzle()
 	return m_puzzle;
 }
 
-void Game::printInfo(User u)
+void Game::printInfo(const User& u)
 {
 	std::cout << "CATEGORY : " << m_puzzle.getWordHandler().getCategory() << std::endl;
 	std::cout.put('\n');
@@ -185,36 +187,30 @@ int main()
 
 int main()
 {
-	std::cout << "Welcome to Wheel of Fortune CLI Game" << std::endl;
+	std::cout << "Welcome to Wheel of Fortune CLI Game!" << std::endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 
 	Game g;
-	User* a = new User("Gogol");
-	User* b = new User("Bapi");
-	User* c = new User("Gaton");
+	const int numOfPlayers = 3;
+	std::array<User, numOfPlayers> userOrderList{{{"Gogol"}, {"Bapi"}, {"Gaton"}}};
 
-	a->changeHasTurn();
+	int currentPlayerIndex = 0;
+	User* currentPlayer = &userOrderList.at(currentPlayerIndex);
+	currentPlayer->changeHasTurn();
 
 	while (!g.getPuzzle().getIsSolved())
 	{
-		if (a->getHasTurn() && !g.getPuzzle().getIsSolved())
+		currentPlayer = &userOrderList.at(currentPlayerIndex);
+		int nextPlayerIndex = (currentPlayerIndex + 1) % numOfPlayers;
+		User* nextPlayer = &userOrderList.at(nextPlayerIndex);
+		if (currentPlayer->getHasTurn() && !g.getPuzzle().getIsSolved())
 		{
-			g.play(a);
-			b->changeHasTurn();
-			a->changeHasTurn();
-		}
-		if (b->getHasTurn() && !g.getPuzzle().getIsSolved())
-		{
-			g.play(b);
-			c->changeHasTurn();
-			b->changeHasTurn();
-		}
-		if (c->getHasTurn() && !g.getPuzzle().getIsSolved())
-		{
-			g.play(c);
-			a->changeHasTurn();
-			c->changeHasTurn();
+			g.play(currentPlayer);
+			nextPlayer->changeHasTurn();
+			currentPlayer->changeHasTurn();
+			currentPlayerIndex = nextPlayerIndex;
 		}
 	}
+
 	return 0;
 }

@@ -8,7 +8,7 @@ class Game
     public:
         Game();
         Puzzle getPuzzle();
-        void printInfo(User u);
+        void printInfo(const User& u);
         void play(User *u);
 
     private:

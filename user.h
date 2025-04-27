@@ -6,12 +6,15 @@
 class User
 {
     public:
-        User(std::string newName);
-        std::string getName();
-        double getPuzzAmt();
-        double getTotalAmt();
-        bool getCanSpin();
-        bool getHasTurn();
+        User();
+        User(const std::string& name);
+        void toString();
+        std::string getName() const;
+        double getPuzzAmt() const ;
+        double getTotalAmt() const;
+        bool getCanSpin() const;
+        bool getHasTurn() const;
+        void setName(const std::string& name);
         void changeCanSpin();
         void setCanSpan(bool canSpin);
         void setZeroPuzz();
@@ -27,4 +30,5 @@ class User
         bool m_canSpin;
         bool m_hasTurn;
 };
+std::ostream& operator<<(std::ostream& str, const User& u);
 #endif

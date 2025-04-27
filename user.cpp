@@ -1,38 +1,64 @@
 #include <iostream>
 #include "user.h"
 
-User::User(std::string newName)
+
+User::User()
 {
 	m_canSpin = false;
-	m_name = newName;
+	m_name = "";
 	m_puzzAmt = 0;
 	m_totalAmt = 0;
 	m_hasTurn = false;
 }
 
-std::string User::getName()
+User::User(const std::string& name)
+{
+	m_canSpin = false;
+	m_name = name;
+	m_puzzAmt = 0;
+	m_totalAmt = 0;
+	m_hasTurn = false;
+}
+
+std::ostream& operator<<(std::ostream& str, User const& u) 
+{ 
+	str << "Name = " << u.getName()
+	    << " puzzAmt=" << u.getPuzzAmt()
+		<< " totalAmt=" << u.getTotalAmt()
+		<< " canSpin=" << u.getCanSpin()
+		<< " hasTurn=" << u.getHasTurn()
+		<< std::endl;
+	return str;
+}
+
+std::string User::getName() const
 {
 	return m_name;
 }
 
-double User::getPuzzAmt()
+double User::getPuzzAmt() const
 {
 	return m_puzzAmt;
 }
 
-double User::getTotalAmt()
+double User::getTotalAmt() const
 {
 	return m_totalAmt;
 }
 
-bool User::getCanSpin()
+bool User::getCanSpin() const
 {
 	return m_canSpin;
 }
 
-bool User::getHasTurn()
+bool User::getHasTurn() const
 {
 	return m_hasTurn;
+}
+
+void User::setName(const std::string& name)
+{
+	m_name = name;
 }
 
 void User::changeCanSpin()
