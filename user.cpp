@@ -66,7 +66,7 @@ void User::changeCanSpin()
 	m_canSpin = !m_canSpin;
 }
 
-void User::setCanSpan(bool canSpin)
+void User::setCanSpin(bool canSpin)
 {
 	m_canSpin = canSpin;
 }

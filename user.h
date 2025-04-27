@@ -16,7 +16,7 @@ class User
         bool getHasTurn() const;
         void setName(const std::string& name);
         void changeCanSpin();
-        void setCanSpan(bool canSpin);
+        void setCanSpin(bool canSpin);
         void setZeroPuzz();
         void setZeroTotal();
         void changePuzzAmt(double change);
