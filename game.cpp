@@ -10,30 +10,32 @@
 	
 Game::Game()
 {
-	/*std::cout << "CATEGORY : " << puzzle.getWordHandler().getCategory() << std::endl;
+	/*
+	std::cout << "CATEGORY : " << m_puzzle.getWordHandler().getCategory() << std::endl;
 	std::cout.put('\n');
-	std::cout << "PUZZLE : "  << puzzle.getWordHandler().getPuzzle() << std::endl;
+	std::cout << "PUZZLE : "  << m_puzzle.getWordHandler().getPuzzle() << std::endl;
 	std::cout.put('\n');
-	std::cout << "BOARD : "  << puzzle.getBoard() << std::endl;
-	std::cout.put('\n');*/
+	std::cout << "BOARD : "  << m_puzzle.getBoard() << std::endl;
+	std::cout.put('\n');
+	*/
 }
 
 Puzzle Game::getPuzzle()
 {
-	return puzzle;
+	return m_puzzle;
 }
 
 void Game::printInfo(User u)
 {
-	std::cout << "CATEGORY : " << puzzle.getWordHandler().getCategory() << std::endl;
+	std::cout << "CATEGORY : " << m_puzzle.getWordHandler().getCategory() << std::endl;
 	std::cout.put('\n');
 
-	std::cout << "PUZZLE : "  << puzzle.getWordHandler().getPuzzle() << std::endl;
+	std::cout << "PUZZLE : "  << m_puzzle.getWordHandler().getPuzzle() << std::endl;
 	std::cout.put('\n');
 	
 	std::cout << "It is " << u.getName() << "'s turn" << std::endl;
 	std::cout.put('\n');
-	std::cout << "BOARD : " << puzzle.getBoard() << std::endl;
+	std::cout << "BOARD : " << m_puzzle.getBoard() << std::endl;
 	std::cout.put('\n');
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	std::cout << "SCORE : $" << u.getPuzzAmt() << std:: endl;
@@ -41,7 +43,7 @@ void Game::printInfo(User u)
 	std::cout << "TOTAL : $" << u.getTotalAmt() << std::endl;
 	std::cout.put('\n');
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	puzzle.printLetters();
+	m_puzzle.printLetters();
 	std::cout.put('\n');
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 }
@@ -50,7 +52,7 @@ void Game::play(User *u)
 {
 	u->changeCanSpin(); //should make canSpin true
 	char guess;
-	while (!puzzle.getIsSolved() && u->getCanSpin())
+	while (!m_puzzle.getIsSolved() && u->getCanSpin())
 	{
 		printInfo(*u);
 		std::cout << "What would you like to do? " << std::endl;
@@ -85,7 +87,7 @@ void Game::play(User *u)
 						if (isalpha(option.at(0)))
 						{
 							char letterGuess = toupper(option.at(0));
-							guessOutcome = puzzle.guessLetter(letterGuess);
+							guessOutcome = m_puzzle.guessLetter(letterGuess);
 							isValidLetterInput = true;
 						}
 						else
@@ -105,12 +107,12 @@ void Game::play(User *u)
 				{
 					case Puzzle::GuessOutcome::CORRECT:
 					case Puzzle::GuessOutcome::SOLVED:
-						std::cout << " You gain $" <<val*puzzle.getNumOfLetters() << " dollars" << std::endl;
-						u->changePuzzAmt(val*puzzle.getNumOfLetters());
+						std::cout << " You gain $" <<val*m_puzzle.getNumOfLetters() << " dollars" << std::endl;
+						u->changePuzzAmt(val*m_puzzle.getNumOfLetters());
 						break;
 					case Puzzle::GuessOutcome::INCORRECT:
 					default:
-					    std::cout << "Sorry, Your turn is over" << std::endl;
+						std::cout << "Sorry, Your turn is over" << std::endl;
 						u->changeCanSpin();
 						break;
 				}
@@ -130,8 +132,8 @@ void Game::play(User *u)
 			std::cout << "What is your guess for the puzzle? : " << std::endl;
 			std::cout << ">";
 			getline(std::cin,puzzleGuess);
-			puzzle.solvePuzzle(puzzleGuess);
-			if (!puzzle.getIsSolved())
+			m_puzzle.solvePuzzle(puzzleGuess);
+			if (!m_puzzle.getIsSolved())
 			{
 				u->changeCanSpin();
 			}
@@ -146,16 +148,16 @@ void Game::play(User *u)
 			std::cout << "That is not a valid option" << std::endl;
 			std::cout.put('\n');
 			std::this_thread::sleep_for(std::chrono::seconds(1));
-/*			std::cout << "CATEGORY : " << puzzle.getWordHandler().getCategory() << std::endl;
+/*			std::cout << "CATEGORY : " << m_puzzle.getWordHandler().getCategory() << std::endl;
 			std::cout.put('\n');
-			std::cout << "BOARD : " << puzzle.getBoard() << std::endl;
+			std::cout << "BOARD : " << m_puzzle.getBoard() << std::endl;
 			std::cout.put('\n');
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 */
 		}
 	}
 
-	if (puzzle.getIsSolved())
+	if (m_puzzle.getIsSolved())
 	{
 		std::cout << u->getName() << " has solved the puzzle and earned " << u->getPuzzAmt() << " dollars" << std::endl;
 		u->changeTotalAmt(u->getPuzzAmt());

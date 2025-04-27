@@ -11,8 +11,8 @@ class WordHandler
 		std::string getPuzzle();
 
 	private:
-		std::string category;
-		std::string puzzle;
+		std::string m_category;
+		std::string m_puzzle;
 		void readWord();
 };
 #endif

@@ -19,15 +19,15 @@ void WordHandler::readWord()
 	{
 		case 0:
 			infile.open("./puzzles/phrases.txt");
-			category = "PHRASES";
+			m_category = "PHRASES";
 			break;
 		case 1:
 			infile.open("./puzzles/classictv.txt");
-			category = "CLASSIC TV";
+			m_category = "CLASSIC TV";
 			break;
 		case 2:
 			infile.open("./puzzles/movietitle.txt");
-			category = "MOVIE TITLE";
+			m_category = "MOVIE TITLE";
 			break;
 		default:
 			std::cout << "File not selected" << std::endl;
@@ -55,7 +55,7 @@ void WordHandler::readWord()
 			++count;
 			if (count==random)
 			{
-				puzzle = s;
+				m_puzzle = s;
 			}
 		}
 		infile.close();
@@ -64,12 +64,12 @@ void WordHandler::readWord()
 
 std::string WordHandler::getCategory()
 {
-	return category;
+	return m_category;
 }
 
 std::string WordHandler::getPuzzle()
 {
-	return puzzle;
+	return m_puzzle;
 }
 
 /*

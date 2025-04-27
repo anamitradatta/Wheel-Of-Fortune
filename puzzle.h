@@ -35,12 +35,12 @@ class Puzzle
 		void solvePuzzle(std::string puzzGuess);
 		
 	private:
-		WordHandler wordHandler;
-		bool isSolved;
-		char* puzzleString;
-		char* boardString;
-		char letters[NUM_LETTERS + 1];
-		int numOfLetters;
+		WordHandler m_wordHandler;
+		bool m_isSolved;
+		char* m_puzzleString;
+		char* m_boardString;
+		char m_letters[NUM_LETTERS + 1];
+		int m_numOfLetters;
 
 		void initLetters();
 };

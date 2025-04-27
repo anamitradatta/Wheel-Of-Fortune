@@ -3,12 +3,12 @@
 
 Reward::Reward(double rewVal)
 {
-	rewardVal = rewVal;
+	m_rewardVal = rewVal;
 }
 
 double Reward::getOutcomeVal()
 {
-	return rewardVal;
+	return m_rewardVal;
 }
 
 void Reward::printType()

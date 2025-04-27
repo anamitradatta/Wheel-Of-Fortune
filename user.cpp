@@ -3,66 +3,76 @@
 
 User::User(std::string newName)
 {
-	canSpin = false;
-	name = newName;
-	puzzAmt = 0;
-	totalAmt = 0;
-	hasTurn = false;
+	m_canSpin = false;
+	m_name = newName;
+	m_puzzAmt = 0;
+	m_totalAmt = 0;
+	m_hasTurn = false;
 }
 
 std::string User::getName()
 {
-	return name;
+	return m_name;
 }
 
 double User::getPuzzAmt()
 {
-	return puzzAmt;
+	return m_puzzAmt;
 }
 
 double User::getTotalAmt()
 {
-	return totalAmt;
+	return m_totalAmt;
 }
 
 bool User::getCanSpin()
 {
-	return canSpin;
+	return m_canSpin;
 }
 
 bool User::getHasTurn()
 {
-	return hasTurn;
+	return m_hasTurn;
 }
 
 void User::changeCanSpin()
 {
-	canSpin = !canSpin;
+	m_canSpin = !m_canSpin;
 }
 
-void User ::setZeroPuzz()
+void User::setCanSpan(bool canSpin)
 {
-	puzzAmt = 0;
+	m_canSpin = canSpin;
+}
+
+void User::setZeroPuzz()
+{
+	m_puzzAmt = 0;
 }
 
 void User::setZeroTotal()
 {
-	totalAmt = 0;
+	m_totalAmt = 0;
 }
 
 void User::changePuzzAmt(double change)
 {
-	puzzAmt = puzzAmt + change;
+	m_puzzAmt = m_puzzAmt + change;
 }
 
 void User::changeTotalAmt(double change)
 {
-	totalAmt = totalAmt + change;
+	m_totalAmt = m_totalAmt + change;
 }
 
 void User::changeHasTurn()
 {
-	hasTurn = !hasTurn;
+	m_hasTurn = !m_hasTurn;
+}
+
+void User::setHasTurn(bool hasTurn)
+{
+	m_hasTurn = hasTurn;
 }
 
 /*

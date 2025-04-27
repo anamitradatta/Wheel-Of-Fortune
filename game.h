@@ -12,6 +12,6 @@ class Game
         void play(User *u);
 
     private:
-        Puzzle puzzle;
+        Puzzle m_puzzle;
 };
 #endif

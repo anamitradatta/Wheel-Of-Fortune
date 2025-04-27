@@ -12,7 +12,7 @@ class Reward : public WheelOutcome
         TypeOutcome getType() override;
         bool canGuess() override;
     private:
-        double rewardVal;
+        double m_rewardVal;
 };
 #endif
 
