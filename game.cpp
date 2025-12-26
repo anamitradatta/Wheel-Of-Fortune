@@ -1,12 +1,13 @@
 #include <thread>
 #include <iostream>
 #include <algorithm>
-#include <array>
+#include <vector>
 
 #include "game.h"
 #include "wheel.h"
 #include "reward.h"
 #include "penalty.h"
+#include "stringutil.h"
 #include "wheeloutcome.h"
 #include "WordHandler.h"
 	
@@ -187,30 +188,54 @@ int main()
 
 int main()
 {
-	std::cout << "Welcome to Wheel of Fortune CLI Game!" << std::endl;
-	std::this_thread::sleep_for(std::chrono::seconds(1));
-
-	Game g;
-	const int numOfPlayers = 3;
-	std::array<User, numOfPlayers> userOrderList{{{"Gogol"}, {"Bapi"}, {"Gaton"}}};
-
-	int currentPlayerIndex = 0;
-	User* currentPlayer = &userOrderList.at(currentPlayerIndex);
-	currentPlayer->changeHasTurn();
-
-	while (!g.getPuzzle().getIsSolved())
+	try
 	{
-		currentPlayer = &userOrderList.at(currentPlayerIndex);
-		int nextPlayerIndex = (currentPlayerIndex + 1) % numOfPlayers;
-		User* nextPlayer = &userOrderList.at(nextPlayerIndex);
-		if (currentPlayer->getHasTurn() && !g.getPuzzle().getIsSolved())
+		std::cout << "Welcome to Wheel of Fortune CLI Game test!" << std::endl;
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+
+		//std::cout << (StringUtil::isInteger("aaa1") ? "true" : "false") << std::endl;
+		//std::this_thread::sleep_for(std::chrono::seconds(1));
+		
+	
+		/*
+		std::cout << "How many players?" << std::endl;
+		std::cout << ">";
+		std::string numOfPlayersInput;
+		getline(std::cin, numOfPlayersInput);
+
+		while (numOfPlayersInput)
+		*/
+
+		Game g;
+		const int numOfPlayers = 3;
+		std::vector<User> userOrderList{{{"Gogol"}, {"Bapi"}, {"Gaton"}}};
+
+		int currentPlayerIndex = 0;
+		User* currentPlayer = &userOrderList.at(currentPlayerIndex);
+		currentPlayer->changeHasTurn();
+
+		while (!g.getPuzzle().getIsSolved())
 		{
-			g.play(currentPlayer);
-			nextPlayer->changeHasTurn();
-			currentPlayer->changeHasTurn();
-			currentPlayerIndex = nextPlayerIndex;
+			currentPlayer = &userOrderList.at(currentPlayerIndex);
+			int nextPlayerIndex = (currentPlayerIndex + 1) % numOfPlayers;
+			User* nextPlayer = &userOrderList.at(nextPlayerIndex);
+			if (currentPlayer->getHasTurn())
+			{
+				g.play(currentPlayer);
+				nextPlayer->changeHasTurn();
+				currentPlayer->changeHasTurn();
+				currentPlayerIndex = nextPlayerIndex;
+			}
 		}
 	}
+	catch(const std::exception& e)
+	{
+		std::cout << "An exception occurred: " << e.what() << std::endl;
+	}
+	catch(...)
+    {
+        std::cout << "An unknown exception occurred" << std::endl;
+    }
 
 	return 0;
 }
