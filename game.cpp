@@ -203,7 +203,7 @@ int main()
 		currentPlayer = &userOrderList.at(currentPlayerIndex);
 		int nextPlayerIndex = (currentPlayerIndex + 1) % numOfPlayers;
 		User* nextPlayer = &userOrderList.at(nextPlayerIndex);
-		if (currentPlayer->getHasTurn() && !g.getPuzzle().getIsSolved())
+		if (currentPlayer->getHasTurn())
 		{
 			g.play(currentPlayer);
 			nextPlayer->changeHasTurn();
