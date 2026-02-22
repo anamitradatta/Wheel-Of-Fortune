@@ -9,10 +9,9 @@ Puzzle::Puzzle()
 	m_isSolved = false;
 	m_numOfLetters = 0;
 	initLetters();
-	m_puzzleString = new char[m_wordHandler.getPuzzle().length()];
-	m_boardString = new char[m_wordHandler.getPuzzle().length()];
-	strcpy(m_puzzleString, m_wordHandler.getPuzzle().c_str());
-	strcpy(m_boardString, getBlankPuzzle());
+	// use std::string to hold the puzzle and board
+	m_puzzleString = m_wordHandler.getPuzzle();
+	m_boardString = getBlankPuzzle();
 	//printPuzzInfo();
 }
 
@@ -42,40 +41,22 @@ WordHandler Puzzle::getWordHandler()
 	return m_wordHandler;
 }
 
-char* Puzzle::getBlankPuzzle()
+std::string Puzzle::getBlankPuzzle() const
 {
-	char* blankPuzzle = new char[m_wordHandler.getPuzzle().length()];
-	for (int i = 0; i < m_wordHandler.getPuzzle().length(); i++)
+	// build a string of the same length as the puzzle with '-' or ' '
+	std::string blank;
+	blank.reserve(m_wordHandler.getPuzzle().length());
+	for (char ch : m_wordHandler.getPuzzle())
 	{
-		if (m_wordHandler.getPuzzle().at(i) != ' ')
-		{ 
-			if(i != m_wordHandler.getPuzzle().length() - 1)
-			{
-				blankPuzzle[i] = '-';
-			}
-			else
-			{
-				blankPuzzle[i] = '-';	
-				blankPuzzle[i+1] = '\0';
-			}
-		}
+		if (ch != ' ')
+			blank.push_back('-');
 		else
-		{
-			if(i != m_wordHandler.getPuzzle().length() - 1)
-			{
-				blankPuzzle[i] = ' ';
-			}
-			else
-			{
-				blankPuzzle[i] = ' ';	
-				blankPuzzle[i+1] = '\0';
-			}
-		}
+			blank.push_back(' ');
 	}
-	return blankPuzzle;
+	return blank;
 }
 
-char* Puzzle::getBoard()
+const std::string& Puzzle::getBoard() const
 {
 	return m_boardString;
 }
@@ -145,7 +126,7 @@ Puzzle::GuessOutcome Puzzle::guessLetter(char charGuess)
 	removeLetter(charGuess);
 	int i;
 	m_numOfLetters = 0;
-	for (i = 0; i < strlen(m_puzzleString); i++)
+	for (size_t i = 0; i < m_puzzleString.size(); i++)
 	{
 		if (m_puzzleString[i] == charGuess)
 		{
@@ -153,7 +134,7 @@ Puzzle::GuessOutcome Puzzle::guessLetter(char charGuess)
 			m_boardString[i] = charGuess;
 		}
 	}
-	if (strcmp(m_boardString, m_puzzleString) == 0)
+	if (m_boardString == m_puzzleString)
 	{
 		m_isSolved = true;
  		std::cout << "You have solved the puzzle : " << m_wordHandler.getPuzzle() << std::endl;
@@ -191,7 +172,7 @@ void Puzzle::solvePuzzle(std::string puzzGuess)
 	std::cout.put('\n');
 	if (puzzGuess == m_wordHandler.getPuzzle())
 	{
-		strcpy(m_boardString, m_puzzleString);
+		m_boardString = m_puzzleString;
 		m_isSolved = true;
 		std::cout << "You have solved the puzzle : " << m_boardString << std::endl;
 		std::cout.put('\n');

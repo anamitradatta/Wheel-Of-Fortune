@@ -62,12 +62,12 @@ void WordHandler::readWord()
 	}
 }
 
-std::string WordHandler::getCategory()
+std::string WordHandler::getCategory() const
 {
 	return m_category;
 }
 
-std::string WordHandler::getPuzzle()
+std::string WordHandler::getPuzzle() const
 {
 	return m_puzzle;
 }

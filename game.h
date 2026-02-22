@@ -9,7 +9,7 @@ class Game
         Game();
         Puzzle getPuzzle();
         void printInfo(const User& u);
-        void play(User *u);
+void play(User &u);
 
     private:
         Puzzle m_puzzle;

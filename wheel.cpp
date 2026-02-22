@@ -3,30 +3,30 @@
 #include "penalty.h"
 #include <iostream>
 	
-WheelOutcome& Wheel::spin()
+std::unique_ptr<WheelOutcome> Wheel::spin()
 {
-	WheelOutcome* w;
 	srand(time(NULL));
 	int res = (rand() % 4);
+	std::unique_ptr<WheelOutcome> w;
 	switch(res)
 	{
 		case 0:
-			w = new Penalty();
+			w = std::make_unique<Penalty>();
 			break;
 		case 1:
-			w = new Reward(100);
+			w = std::make_unique<Reward>(100);
 			break;
 		case 2:
-			w = new Reward(200);
+			w = std::make_unique<Reward>(200);
 			break;
 		case 3:
-			w = new Reward(300);
+			w = std::make_unique<Reward>(300);
 			break;
 		default:
-		    w = new Reward(0);
+			w = std::make_unique<Reward>(0);
 			break;
 	}
-	return *w;
+	return w;
 }
 
 /*
@@ -61,9 +61,10 @@ WheelOutcome* Wheel::spin()
 int main()
 {
 	Wheel w;
-	WheelOutcome* a =  &(w.spin());
-	a->printType();
-	std::cout << a->getOutcomeVal() << std::endl;
+	// use unique_ptr returned by spin
+	// auto a = w.spin();
+	// a->printType();
+	// std::cout << a->getOutcomeVal() << std::endl;
 	
 	//int num1 = 1;
 	//int* pnum = &num1;

@@ -21,13 +21,13 @@ class Puzzle
 		Puzzle();
 		void printPuzzInfo();
 		WordHandler getWordHandler();
-		char* getBlankPuzzle();
-		char* getBoard();
+		std::string getBlankPuzzle() const;   // returns a string with dashes/spaces
+		const std::string& getBoard() const;
 		int getNumOfLetters();
 		bool getIsSolved();
 		void printLetters();
 		void removeLetter(char l);
-		bool isInLetters(char charGuess);\
+		bool isInLetters(char charGuess);
 	
 	    // returns true if letter is in puzzle
 		// returns false if letter is not in puzzle or duplicate letter is given
@@ -37,8 +37,8 @@ class Puzzle
 	private:
 		WordHandler m_wordHandler;
 		bool m_isSolved;
-		char* m_puzzleString;
-		char* m_boardString;
+		std::string m_puzzleString;
+		std::string m_boardString;
 		char m_letters[NUM_LETTERS + 1];
 		int m_numOfLetters;
 

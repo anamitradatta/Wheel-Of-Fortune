@@ -7,8 +7,8 @@ class WordHandler
 {
 	public:
 		WordHandler();
-		std::string getCategory();	
-		std::string getPuzzle();
+		std::string getCategory() const;	
+		std::string getPuzzle() const;
 
 	private:
 		std::string m_category;

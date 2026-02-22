@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <array>
+#include <memory> // for smart‑pointer examples
 
 #include "game.h"
 #include "wheel.h"
@@ -50,13 +51,13 @@ void Game::printInfo(const User& u)
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
-void Game::play(User *u)
+void Game::play(User &u)
 {
-	u->changeCanSpin(); //should make canSpin true
+	u.changeCanSpin(); //should make canSpin true
 	char guess;
-	while (!m_puzzle.getIsSolved() && u->getCanSpin())
+	while (!m_puzzle.getIsSolved() && u.getCanSpin())
 	{
-		printInfo(*u);
+		printInfo(u);
 		std::cout << "What would you like to do? " << std::endl;
 		std::cout << "Either type \"w\" to spin the wheel and guess a letter or type \"s\" to solve the puzzle or type \"e\" to exit the game" << std::endl;
 		std::cout.put('\n');
@@ -67,7 +68,7 @@ void Game::play(User *u)
 		if (option == "w")
 		{
 			Wheel w;
-			WheelOutcome* a =  &(w.spin());
+			auto a = w.spin();
 		
 			if (a->canGuess())
 			{
@@ -110,12 +111,12 @@ void Game::play(User *u)
 					case Puzzle::GuessOutcome::CORRECT:
 					case Puzzle::GuessOutcome::SOLVED:
 						std::cout << " You gain $" <<val*m_puzzle.getNumOfLetters() << " dollars" << std::endl;
-						u->changePuzzAmt(val*m_puzzle.getNumOfLetters());
+						u.changePuzzAmt(val*m_puzzle.getNumOfLetters());
 						break;
 					case Puzzle::GuessOutcome::INCORRECT:
 					default:
 						std::cout << "Sorry, Your turn is over" << std::endl;
-						u->changeCanSpin();
+						u.changeCanSpin();
 						break;
 				}
 			}
@@ -124,8 +125,8 @@ void Game::play(User *u)
 				std::cout << "You landed on bankrupt" << std::endl;
 				std::cout << "Sorry, your turn is over and you lose all your money this round" << std::endl;
 				std::this_thread::sleep_for(std::chrono::seconds(1));
-				u->setZeroPuzz();
-				u->changeCanSpin();
+					u.setZeroPuzz();
+				u.changeCanSpin();
 			}
 		}
 		else if (option == "s")
@@ -137,7 +138,7 @@ void Game::play(User *u)
 			m_puzzle.solvePuzzle(puzzleGuess);
 			if (!m_puzzle.getIsSolved())
 			{
-				u->changeCanSpin();
+				u.changeCanSpin();
 			}
 		}
 		else if (option == "e")
@@ -161,8 +162,8 @@ void Game::play(User *u)
 
 	if (m_puzzle.getIsSolved())
 	{
-		std::cout << u->getName() << " has solved the puzzle and earned " << u->getPuzzAmt() << " dollars" << std::endl;
-		u->changeTotalAmt(u->getPuzzAmt());
+			std::cout << u.getName() << " has solved the puzzle and earned " << u.getPuzzAmt() << " dollars" << std::endl;
+			u.changeTotalAmt(u.getPuzzAmt());
 	}
 }
 
@@ -172,10 +173,12 @@ int main()
 {
 	Game g;
 	//User a("Gogol");
+	// auto a = std::make_unique<User>("Gogol");
+	// if you do allocate dynamically, prefer smart pointers
 	User* a = new User("Gogol");
 	if (!g.getPuzzle().getIsSolved())
 	{
-		//g.play(&a);
+		//g.play(*a);
 		g.play(a);
 	}
 	std::cout << "PUZZLE AMT : " <<  a->getPuzzAmt() << std::endl;
@@ -195,19 +198,18 @@ int main()
 	std::array<User, numOfPlayers> userOrderList{{{"Gogol"}, {"Bapi"}, {"Gaton"}}};
 
 	int currentPlayerIndex = 0;
-	User* currentPlayer = &userOrderList.at(currentPlayerIndex);
-	currentPlayer->changeHasTurn();
+	userOrderList.at(currentPlayerIndex).changeHasTurn();
 
 	while (!g.getPuzzle().getIsSolved())
 	{
-		currentPlayer = &userOrderList.at(currentPlayerIndex);
+		User &currentPlayer = userOrderList.at(currentPlayerIndex);
 		int nextPlayerIndex = (currentPlayerIndex + 1) % numOfPlayers;
-		User* nextPlayer = &userOrderList.at(nextPlayerIndex);
-		if (currentPlayer->getHasTurn())
+		User &nextPlayer = userOrderList.at(nextPlayerIndex);
+		if (currentPlayer.getHasTurn())
 		{
 			g.play(currentPlayer);
-			nextPlayer->changeHasTurn();
-			currentPlayer->changeHasTurn();
+			nextPlayer.changeHasTurn();
+			currentPlayer.changeHasTurn();
 			currentPlayerIndex = nextPlayerIndex;
 		}
 	}

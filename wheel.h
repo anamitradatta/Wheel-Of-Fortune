@@ -1,4 +1,5 @@
 #include "wheeloutcome.h"
+#include <memory>
 
 #ifndef WHEEL_H
 #define WHEEL_H
@@ -6,6 +7,6 @@
 class Wheel
 {
 	public:
-		WheelOutcome& spin();
+		std::unique_ptr<WheelOutcome> spin();
 };
 #endif	
