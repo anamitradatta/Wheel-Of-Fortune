@@ -4,17 +4,17 @@
 class WheelOutcome
 {
 public:
-    enum TypeOutcome 
+    enum class TypeOutcome
     {
         NOTHING,
         REWARD,
         PENALTY
     };
 
-    virtual void printType() = 0;
-    virtual TypeOutcome getType() = 0;
-    virtual double getOutcomeVal() = 0;
-    virtual bool canGuess() = 0;
+    virtual void PrintType() = 0;
+    virtual TypeOutcome GetType() = 0;
+    virtual double GetOutcomeValue() = 0;
+    virtual bool CanGuess() = 0;
 };
 
 #endif

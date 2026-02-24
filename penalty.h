@@ -6,9 +6,9 @@
 class Penalty : public WheelOutcome
 {
     public:
-        double getOutcomeVal() override;
-        void printType() override;
-        TypeOutcome getType() override;
-        bool canGuess() override;
+        double GetOutcomeValue() override;
+        void PrintType() override;
+        TypeOutcome GetType() override;
+        bool CanGuess() override;
 };
 #endif

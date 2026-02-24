@@ -6,6 +6,6 @@
 class Wheel
 {
 	public:
-		WheelOutcome& spin();
+		WheelOutcome& Spin();
 };
 #endif	

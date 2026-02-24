@@ -1,22 +1,22 @@
 #include "penalty.h"
 #include <iostream>
 
-double Penalty::getOutcomeVal()
+double Penalty::GetOutcomeValue()
 {
 	return 0;
 }
 
-void Penalty::printType()
+void Penalty::PrintType()
 {
 	std::cout << "PENALTY" << std::endl;
 }
 
-WheelOutcome::TypeOutcome Penalty::getType()
+WheelOutcome::TypeOutcome Penalty::GetType()
 {
 	return TypeOutcome::PENALTY;
 }
 
-bool Penalty::canGuess()
+bool Penalty::CanGuess()
 {
 	return false;
 }

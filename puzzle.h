@@ -10,7 +10,7 @@
 class Puzzle
 {
 	public:
-        enum GuessOutcome
+        enum class GuessOutcome
 		{
 			CORRECT,
 			INCORRECT,
@@ -19,29 +19,29 @@ class Puzzle
 		};
 
 		Puzzle();
-		void printPuzzInfo();
-		WordHandler getWordHandler();
-		char* getBlankPuzzle();
-		char* getBoard();
-		int getNumOfLetters();
-		bool getIsSolved();
-		void printLetters();
-		void removeLetter(char l);
-		bool isInLetters(char charGuess);\
+		void PrintPuzzleInfo();
+		WordHandler GetWordHandler();
+		char* GetBlankPuzzle();
+		char* GetBoard();
+		int GetNumOfLetters();
+		bool GetIsSolved();
+		void PrintLetters();
+		void RemoveLetter(char l);
+		bool IsInLetters(char char_guess);
 	
 	    // returns true if letter is in puzzle
 		// returns false if letter is not in puzzle or duplicate letter is given
-		GuessOutcome guessLetter(char charGuess);
-		void solvePuzzle(std::string puzzGuess);
+		GuessOutcome GuessLetter(char char_guess);
+		void SolvePuzzle(std::string puzzle_guess);
 		
 	private:
-		WordHandler m_wordHandler;
-		bool m_isSolved;
-		char* m_puzzleString;
-		char* m_boardString;
+		WordHandler m_word_handler;
+		bool m_is_solved;
+		char* m_puzzle_string;
+		char* m_board_string;
 		char m_letters[NUM_LETTERS + 1];
-		int m_numOfLetters;
+		int m_num_of_letters;
 
-		void initLetters();
+		void InitLetters();
 };
 #endif

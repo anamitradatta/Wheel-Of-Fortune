@@ -7,12 +7,12 @@ class WordHandler
 {
 	public:
 		WordHandler();
-		std::string getCategory();	
-		std::string getPuzzle();
+		std::string GetCategory();
+		std::string GetPuzzle();
 
 	private:
 		std::string m_category;
 		std::string m_puzzle;
-		void readWord();
+		void ReadWord();
 };
 #endif

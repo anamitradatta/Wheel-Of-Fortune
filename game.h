@@ -7,9 +7,9 @@ class Game
 {
     public:
         Game();
-        Puzzle getPuzzle();
-        void printInfo(const User& u);
-        void play(User *u);
+        Puzzle GetPuzzle();
+        void PrintInfo(const User& u);
+        void Play(User *u);
 
     private:
         Puzzle m_puzzle;

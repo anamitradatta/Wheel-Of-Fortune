@@ -1,27 +1,27 @@
 #include "reward.h"
 #include <iostream>
 
-Reward::Reward(double rewVal)
+Reward::Reward(double reward_value)
 {
-	m_rewardVal = rewVal;
+	m_reward_value = reward_value;
 }
 
-double Reward::getOutcomeVal()
+double Reward::GetOutcomeValue()
 {
-	return m_rewardVal;
+	return m_reward_value;
 }
 
-void Reward::printType()
+void Reward::PrintType()
 {
 	std::cout << "REWARD" << std::endl;
 }
 
-WheelOutcome::TypeOutcome Reward::getType()
+WheelOutcome::TypeOutcome Reward::GetType()
 {
 	return TypeOutcome::REWARD;
 }
 
-bool Reward::canGuess()
+bool Reward::CanGuess()
 {
 	return true;
 }

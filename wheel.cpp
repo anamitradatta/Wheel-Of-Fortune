@@ -3,7 +3,7 @@
 #include "penalty.h"
 #include <iostream>
 	
-WheelOutcome& Wheel::spin()
+WheelOutcome& Wheel::Spin()
 {
 	WheelOutcome* w;
 	srand(time(NULL));

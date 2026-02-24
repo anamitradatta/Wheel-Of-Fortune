@@ -4,119 +4,119 @@
 
 User::User()
 {
-	m_canSpin = false;
+	m_can_spin = false;
 	m_name = "";
-	m_puzzAmt = 0;
-	m_totalAmt = 0;
-	m_hasTurn = false;
+	m_puzzle_amount = 0;
+	m_total_amount = 0;
+	m_has_turn = false;
 }
 
 User::User(const std::string& name)
 {
-	m_canSpin = false;
+	m_can_spin = false;
 	m_name = name;
-	m_puzzAmt = 0;
-	m_totalAmt = 0;
-	m_hasTurn = false;
+	m_puzzle_amount = 0;
+	m_total_amount = 0;
+	m_has_turn = false;
 }
 
 std::ostream& operator<<(std::ostream& str, User const& u) 
 { 
-	str << "Name = " << u.getName()
-	    << " puzzAmt=" << u.getPuzzAmt()
-		<< " totalAmt=" << u.getTotalAmt()
-		<< " canSpin=" << u.getCanSpin()
-		<< " hasTurn=" << u.getHasTurn()
+	str << "Name = " << u.GetName()
+	    << " puzzAmt=" << u.GetPuzzleAmount()
+		<< " totalAmt=" << u.GetTotalAmount()
+		<< " canSpin=" << u.GetCanSpin()
+		<< " hasTurn=" << u.GetHasTurn()
 		<< std::endl;
 	return str;
 }
 
-std::string User::getName() const
+std::string User::GetName() const
 {
 	return m_name;
 }
 
-double User::getPuzzAmt() const
+double User::GetPuzzleAmount() const
 {
-	return m_puzzAmt;
+	return m_puzzle_amount;
 }
 
-double User::getTotalAmt() const
+double User::GetTotalAmount() const
 {
-	return m_totalAmt;
+	return m_total_amount;
 }
 
-bool User::getCanSpin() const
+bool User::GetCanSpin() const
 {
-	return m_canSpin;
+	return m_can_spin;
 }
 
-bool User::getHasTurn() const
+bool User::GetHasTurn() const
 {
-	return m_hasTurn;
+	return m_has_turn;
 }
 
-void User::setName(const std::string& name)
+void User::SetName(const std::string& name)
 {
 	m_name = name;
 }
 
-void User::changeCanSpin()
+void User::ChangeCanSpin()
 {
-	m_canSpin = !m_canSpin;
+	m_can_spin = !m_can_spin;
 }
 
-void User::setCanSpin(bool canSpin)
+void User::SetCanSpin(bool can_spin)
 {
-	m_canSpin = canSpin;
+	m_can_spin = can_spin;
 }
 
-void User::setZeroPuzz()
+void User::SetZeroPuzzleAmount()
 {
-	m_puzzAmt = 0;
+	m_puzzle_amount = 0;
 }
 
-void User::setZeroTotal()
+void User::SetZeroTotalAmount()
 {
-	m_totalAmt = 0;
+	m_total_amount = 0;
 }
 
-void User::changePuzzAmt(double change)
+void User::ChangePuzzleAmount(double change)
 {
-	m_puzzAmt = m_puzzAmt + change;
+	m_puzzle_amount += change;
 }
 
-void User::changeTotalAmt(double change)
+void User::ChangeTotalAmount(double change)
 {
-	m_totalAmt = m_totalAmt + change;
+	m_total_amount += change;
 }
 
-void User::changeHasTurn()
+void User::ChangeHasTurn()
 {
-	m_hasTurn = !m_hasTurn;
+	m_has_turn = !m_has_turn;
 }
 
-void User::setHasTurn(bool hasTurn)
+void User::SetHasTurn(bool has_turn)
 {
-	m_hasTurn = hasTurn;
+	m_has_turn = has_turn;
 }
 
 /*
 int main()
 {
 	User n("Norman");
-	std::cout << "name=" << n.getName() << std::endl;
-	std::cout << "puzzAmt=" << n.getPuzzAmt() << std::endl;
-	std::cout << "totalAmt=" << n.getTotalAmt() << std::endl;
+	std::cout << "name=" << n.GetName() << std::endl;
+	std::cout << "puzzAmt=" << n.GetPuzzleAmount() << std::endl;
+	std::cout << "totalAmt=" << n.GetTotalAmount() << std::endl;
 	std::cout << "Adding 100 to User" << std::endl;
-	n.changePuzzAmt(100);
-	n.changeTotalAmt(n.getPuzzAmt());
-	std::cout << "puzzAmt=" << n.getPuzzAmt() << std::endl;
-	std::cout << "totalAmt=" << n.getTotalAmt() << std::endl;
-	n.setZeroPuzz();
-	n.setZeroTotal();
+	n.ChangePuzzleAmount(100);
+	n.ChangeTotalAmount(n.GetPuzzleAmount());
+	std::cout << "puzzAmt=" << n.GetPuzzleAmount() << std::endl;
+	std::cout << "totalAmt=" << n.GetTotalAmount() << std::endl;
+	n.SetZeroPuzzleAmount();
+	n.SetZeroTotalAmount();
 	std::cout << "Setting 0 to User" << std::endl;
-	std::cout << "puzzAmt=" << n.getPuzzAmt() << std::endl;
-	std::cout << "totalAmt=" << n.getTotalAmt() << std::endl;
+	std::cout << "puzzAmt=" << n.GetPuzzleAmount() << std::endl;
+	std::cout << "totalAmt=" << n.GetTotalAmount() << std::endl;
 	return 0;
 }*/

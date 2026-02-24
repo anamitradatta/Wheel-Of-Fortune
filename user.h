@@ -8,27 +8,27 @@ class User
     public:
         User();
         User(const std::string& name);
-        void toString();
-        std::string getName() const;
-        double getPuzzAmt() const ;
-        double getTotalAmt() const;
-        bool getCanSpin() const;
-        bool getHasTurn() const;
-        void setName(const std::string& name);
-        void changeCanSpin();
-        void setCanSpin(bool canSpin);
-        void setZeroPuzz();
-        void setZeroTotal();
-        void changePuzzAmt(double change);
-        void changeTotalAmt(double change);
-        void changeHasTurn();
-        void setHasTurn(bool hasTurn);
+        void ToString();
+        std::string GetName() const;
+        double GetPuzzleAmount() const ;
+        double GetTotalAmount() const;
+        bool GetCanSpin() const;
+        bool GetHasTurn() const;
+        void SetName(const std::string& name);
+        void ChangeCanSpin();
+        void SetCanSpin(bool can_spin);
+        void SetZeroPuzzleAmount();
+        void SetZeroTotalAmount();
+        void ChangePuzzleAmount(double change);
+        void ChangeTotalAmount(double change);
+        void ChangeHasTurn();
+        void SetHasTurn(bool has_turn);
     private:
         std::string m_name;
-        double m_puzzAmt;
-        double m_totalAmt;
-        bool m_canSpin;
-        bool m_hasTurn;
+        double m_puzzle_amount;
+        double m_total_amount;
+        bool m_can_spin;
+        bool m_has_turn;
 };
 std::ostream& operator<<(std::ostream& str, const User& u);
 #endif

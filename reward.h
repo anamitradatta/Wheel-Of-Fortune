@@ -6,13 +6,13 @@
 class Reward : public WheelOutcome
 {
     public:
-        Reward(double rewVal);
-        double getOutcomeVal() override;
-        void printType() override;
-        TypeOutcome getType() override;
-        bool canGuess() override;
+        Reward(double reward_value);
+        double GetOutcomeValue() override;
+        void PrintType() override;
+        TypeOutcome GetType() override;
+        bool CanGuess() override;
     private:
-        double m_rewardVal;
+        double m_reward_value;
 };
 #endif
 

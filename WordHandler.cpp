@@ -4,10 +4,10 @@
 
 WordHandler::WordHandler()
 {
-	readWord();
+	ReadWord();
 }
 
-void WordHandler::readWord()
+void WordHandler::ReadWord()
 {
 	int numoflines = 0;
 	int count = 0;
@@ -53,7 +53,7 @@ void WordHandler::readWord()
 		while (getline(infile,s))
 		{
 			++count;
-			if (count==random)
+			if (count == random)
 			{
 				m_puzzle = s;
 			}
@@ -62,12 +62,12 @@ void WordHandler::readWord()
 	}
 }
 
-std::string WordHandler::getCategory()
+std::string WordHandler::GetCategory()
 {
 	return m_category;
 }
 
-std::string WordHandler::getPuzzle()
+std::string WordHandler::GetPuzzle()
 {
 	return m_puzzle;
 }
@@ -75,8 +75,8 @@ std::string WordHandler::getPuzzle()
 /*
 int main(){
 	WordHandler w;
-	std::cout << w.getCategory() << std::endl;
-	std::cout << w.getPuzzle() << std::endl;
+	std::cout << w.GetCategory() << std::endl;
+	std::cout << w.GetPuzzle() << std::endl;
 	return 0;
 }
 */

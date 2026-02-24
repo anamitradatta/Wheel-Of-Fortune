@@ -1,17 +1,17 @@
 #include "wheeloutcome.h"
 #include <iostream>
 
-void WheelOutcome::printType()
+void WheelOutcome::PrintType()
 {
 	std::cout << "NOTHING" << std::endl;
 }
 
-WheelOutcome::TypeOutcome WheelOutcome::getType()
+WheelOutcome::TypeOutcome WheelOutcome::GetType()
 {
 	return TypeOutcome::NOTHING;
 }
 
-double WheelOutcome::getOutcomeVal()
+double WheelOutcome::GetOutcomeValue()
 {
 	return -1;
 }
