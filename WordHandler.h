@@ -8,11 +8,11 @@ class WordHandler
 	public:
 		WordHandler();
 		std::string GetCategory();
-		std::string GetPuzzle();
+		std::string GetPuzzleString();
 
 	private:
 		std::string m_category;
-		std::string m_puzzle;
+		std::string m_puzzle_string;
 		void ReadWord();
 };
 #endif

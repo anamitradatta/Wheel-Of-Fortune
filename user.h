@@ -8,7 +8,6 @@ class User
     public:
         User();
         User(const std::string& name);
-        void ToString();
         std::string GetName() const;
         double GetPuzzleAmount() const ;
         double GetTotalAmount() const;

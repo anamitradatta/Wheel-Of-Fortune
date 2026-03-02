@@ -9,24 +9,25 @@ WordHandler::WordHandler()
 
 void WordHandler::ReadWord()
 {
-	int numoflines = 0;
+	int num_of_lines = 0;
 	int count = 0;
-	std::ifstream infile;
+	std::ifstream in_file;
 	srand(time(NULL));
-	int randfile = rand() % 3;
+	int rand_file = rand() % 3;
+	std::string file_name;
 
-	switch (randfile)
+	switch (rand_file)
 	{
 		case 0:
-			infile.open("./puzzles/phrases.txt");
+			file_name = "./puzzles/phrases.txt";
 			m_category = "PHRASES";
 			break;
 		case 1:
-			infile.open("./puzzles/classictv.txt");
+			file_name = "./puzzles/classictv.txt";
 			m_category = "CLASSIC TV";
 			break;
 		case 2:
-			infile.open("./puzzles/movietitle.txt");
+			file_name = "./puzzles/movietitle.txt";
 			m_category = "MOVIE TITLE";
 			break;
 		default:
@@ -34,31 +35,33 @@ void WordHandler::ReadWord()
 			exit(1);
 	}
 
-	if (infile.fail())
+	in_file.open(file_name);
+	if (in_file.fail())
 	{
-		std::cout << "Your file did not work" << std::endl;
+		std::cout << "The file " << file_name << " did not open properly" << std::endl;
 		exit(1);
 	}
 	else
 	{
 		std::string s;
-		while (getline(infile,s))
+		while (getline(in_file,s))
 		{
-			++numoflines;
+			++num_of_lines;
 		}
-		infile.clear();
-		infile.seekg(0,std::ios::beg);
+		in_file.clear();
+		in_file.seekg(0,std::ios::beg);
 		srand(time(NULL));
-		int random = rand() % numoflines+1;
-		while (getline(infile,s))
+		int random = rand() % num_of_lines+1;
+		while (getline(in_file,s))
 		{
 			++count;
 			if (count == random)
 			{
-				m_puzzle = s;
+				m_puzzle_string = s;
+				break;
 			}
 		}
-		infile.close();
+		in_file.close();
 	}
 }
 
@@ -67,16 +70,16 @@ std::string WordHandler::GetCategory()
 	return m_category;
 }
 
-std::string WordHandler::GetPuzzle()
+std::string WordHandler::GetPuzzleString()
 {
-	return m_puzzle;
+	return m_puzzle_string;
 }
 
 /*
 int main(){
 	WordHandler w;
 	std::cout << w.GetCategory() << std::endl;
-	std::cout << w.GetPuzzle() << std::endl;
+	std::cout << w.GetPuzzleString() << std::endl;
 	return 0;
 }
 */

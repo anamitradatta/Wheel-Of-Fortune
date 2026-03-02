@@ -15,7 +15,7 @@ Game::Game()
 	/*
 	std::cout << "CATEGORY : " << m_puzzle.GetWordHandler().GetCategory() << std::endl;
 	std::cout.put('\n');
-	std::cout << "PUZZLE : "  << m_puzzle.GetWordHandler().GetPuzzle() << std::endl;
+	std::cout << "PUZZLE : "  << m_puzzle.GetWordHandler().GetPuzzleString() << std::endl;
 	std::cout.put('\n');
 	std::cout << "BOARD : "  << m_puzzle.GetBoard() << std::endl;
 	std::cout.put('\n');
@@ -32,7 +32,7 @@ void Game::PrintInfo(const User& u)
 	std::cout << "CATEGORY : " << m_puzzle.GetWordHandler().GetCategory() << std::endl;
 	std::cout.put('\n');
 
-	std::cout << "PUZZLE : "  << m_puzzle.GetWordHandler().GetPuzzle() << std::endl;
+	std::cout << "PUZZLE : "  << m_puzzle.GetWordHandler().GetPuzzleString() << std::endl;
 	std::cout.put('\n');
 	
 	std::cout << "It is " << u.GetName() << "'s turn" << std::endl;
@@ -53,7 +53,6 @@ void Game::PrintInfo(const User& u)
 void Game::Play(User *u)
 {
 	u->ChangeCanSpin(); //should make canSpin true
-	char guess;
 	while (!m_puzzle.GetIsSolved() && u->GetCanSpin())
 	{
 		PrintInfo(*u);
@@ -74,7 +73,6 @@ void Game::Play(User *u)
 				double val = a->GetOutcomeValue();
 				std::cout << "The wheel landed at $" << val << " dollars" << std::endl;
 				std::this_thread::sleep_for(std::chrono::seconds(1));
-				std::string letter_guess;
 				bool is_valid_letter_input = false;
 				Puzzle::GuessOutcome guess_outcome = Puzzle::GuessOutcome::INVALID;
 				do
@@ -88,8 +86,8 @@ void Game::Play(User *u)
 					{
 						if (std::isalpha(option.at(0)))
 						{
-							char letterGuess = std::toupper(option.at(0));
-							guess_outcome = m_puzzle.GuessLetter(letterGuess);
+							char letter_guess = std::toupper(option.at(0));
+							guess_outcome = m_puzzle.GuessLetter(letter_guess);
 							is_valid_letter_input = true;
 						}
 						else

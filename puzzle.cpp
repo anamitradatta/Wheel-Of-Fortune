@@ -9,9 +9,9 @@ Puzzle::Puzzle()
 	m_is_solved = false;
 	m_num_of_letters = 0;
 	InitLetters();
-	m_puzzle_string = new char[m_word_handler.GetPuzzle().length()];
-	m_board_string = new char[m_word_handler.GetPuzzle().length()];
-	strcpy(m_puzzle_string, m_word_handler.GetPuzzle().c_str());
+	m_puzzle_string = new char[m_word_handler.GetPuzzleString().length()];
+	m_board_string = new char[m_word_handler.GetPuzzleString().length()];
+	strcpy(m_puzzle_string, m_word_handler.GetPuzzleString().c_str());
 	strcpy(m_board_string, GetBlankPuzzle());
 	//PrintPuzzleInfo();
 }
@@ -44,12 +44,12 @@ WordHandler Puzzle::GetWordHandler()
 
 char* Puzzle::GetBlankPuzzle()
 {
-	char* blank_puzzle = new char[m_word_handler.GetPuzzle().length()];
-	for (int i = 0; i < m_word_handler.GetPuzzle().length(); i++)
+	char* blank_puzzle = new char[m_word_handler.GetPuzzleString().length()];
+	for (int i = 0; i < m_word_handler.GetPuzzleString().length(); i++)
 	{
-		if (m_word_handler.GetPuzzle().at(i) != ' ')
+		if (m_word_handler.GetPuzzleString().at(i) != ' ')
 		{ 
-			if(i != m_word_handler.GetPuzzle().length() - 1)
+			if(i != m_word_handler.GetPuzzleString().length() - 1)
 			{
 				blank_puzzle[i] = '-';
 			}
@@ -61,7 +61,7 @@ char* Puzzle::GetBlankPuzzle()
 		}
 		else
 		{
-			if(i != m_word_handler.GetPuzzle().length() - 1)
+			if(i != m_word_handler.GetPuzzleString().length() - 1)
 			{
 				blank_puzzle[i] = ' ';
 			}
@@ -138,7 +138,7 @@ Puzzle::GuessOutcome Puzzle::GuessLetter(char char_guess)
 		std::cout << "You already guessed that letter. Try again. " << std::endl;
 		std::cout.put('\n');
 		std::this_thread::sleep_for(std::chrono::seconds(1));
-		//printPuzzInfo();
+		//PrintPuzzleInfo();
 		//std::this_thread::sleep_for(std::chrono::seconds(1));
 		return GuessOutcome::INVALID;
 	}
@@ -156,7 +156,7 @@ Puzzle::GuessOutcome Puzzle::GuessLetter(char char_guess)
 	if (strcmp(m_board_string, m_puzzle_string) == 0)
 	{
 		m_is_solved = true;
- 		std::cout << "You have solved the puzzle : " << m_word_handler.GetPuzzle() << std::endl;
+ 		std::cout << "You have solved the puzzle : " << m_word_handler.GetPuzzleString() << std::endl;
 		return GuessOutcome::SOLVED;
 	}
 	else
@@ -189,7 +189,7 @@ void Puzzle::SolvePuzzle(std::string puzzle_guess)
 	puzzle_guess = std::regex_replace(puzzle_guess, std::regex("^ +| +$|( ) +"), "$1");
 	transform(puzzle_guess.begin(), puzzle_guess.end(), puzzle_guess.begin(), ::toupper);
 	std::cout.put('\n');
-	if (puzzle_guess == m_word_handler.GetPuzzle())
+	if (puzzle_guess == m_word_handler.GetPuzzleString())
 	{
 		strcpy(m_board_string, m_puzzle_string);
 		m_is_solved = true;
