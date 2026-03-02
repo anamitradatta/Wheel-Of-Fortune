@@ -19,15 +19,15 @@ void WordHandler::ReadWord()
 	switch (rand_file)
 	{
 		case 0:
-			file_name = "./puzzles/phrases.txt";
+			file_name = "./puzzles/puzzle_strings/phrases.txt";
 			m_category = "PHRASES";
 			break;
 		case 1:
-			file_name = "./puzzles/classictv.txt";
+			file_name = "./puzzles/puzzle_strings/classictv.txt";
 			m_category = "CLASSIC TV";
 			break;
 		case 2:
-			file_name = "./puzzles/movietitle.txt";
+			file_name = "./puzzles/puzzle_strings/movietitle.txt";
 			m_category = "MOVIE TITLE";
 			break;
 		default:
